@@ -1,4 +1,6 @@
 // these are the functions for the chat client
+// Author: Frank Gauthier
+
 
 #include "client.h"
 

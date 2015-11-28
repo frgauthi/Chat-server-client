@@ -1,4 +1,5 @@
 // functions file for the server class
+// Author: Frank Gauthier
 
 #include "server.h"
 

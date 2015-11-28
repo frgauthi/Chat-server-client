@@ -1,4 +1,6 @@
 // this is a refactor of the server application
+// Author: Frank Gauthier
+
 #ifndef chatServer_h
 #define chatServer_h
 

@@ -1,3 +1,6 @@
+// this is the main function for the client
+// Author: Frank Gauthier
+
 #include "client.cpp"
 
 int main(int argc, char *argv[]){

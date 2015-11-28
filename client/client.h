@@ -1,4 +1,6 @@
 // This is the header file for the chat client application.
+// Author: Frank Gauthier
+
 #ifndef client_h
 #define client_h
 

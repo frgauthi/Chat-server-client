@@ -1,3 +1,6 @@
+//this is the main function for the server
+// Author: Frank Gauthier
+
 #include "server.cpp"
 
 void *sendMessage(chatServer *serv){
