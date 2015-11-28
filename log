@@ -1,0 +1,17 @@
+	-Create a seperate function that clears the message buffer
+	
+	-recover from errors such as accepting clients rather than crashing
+	(not all clients will fail, server should not crash if one does)
+
+	-Make it so the server can send back a message as a client can.
+
+	-append an identification to each message
+
+	-make a server function that relays messages it gets to other
+	clients that are connected
+
+	-modify the server to allow 2 clients to be connected simultaneously
+	
+	-temporarily allow the server to send messages to the client
+	to allow for testing over the internet
+	
