@@ -19,6 +19,7 @@ void chatServer::error(const char *msg)
 void chatServer::openSocket(){
 	serverSockFileDesc = socket(AF_INET, SOCK_STREAM, 0);
 	if(serverSockFileDesc < 0) error("Error opening socket!");
+	else printf("Socket successfully opened..\n");
 }
 
 
@@ -35,7 +36,7 @@ chatServer::chatServer(int port){
 	this->initServerAddress(port);
 	this->bindSocket();
 	this->portNumber = port;
-	this->listenForClients();
+	
 }
 
 
@@ -52,6 +53,7 @@ void chatServer::initServerAddress(int port){
 void chatServer::bindSocket(){
 	if(bind(serverSockFileDesc, (struct sockaddr *) &server_address, sizeof(server_address)) < 0)
 	error("ERROR on binding!");
+	else printf("Socket successfully bound...\n");
 }
 
 
@@ -61,6 +63,7 @@ void chatServer::listenForClients(){
 	clientSocketLength = sizeof(client_address);
 	clientSockFileDesc = accept(serverSockFileDesc, (struct sockaddr *) &client_address, &clientSocketLength);
 	if(clientSockFileDesc < 0) error("ERROR accepting client");
+	else printf("Client connected..\n");
 }
 
 

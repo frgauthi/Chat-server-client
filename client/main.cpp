@@ -13,7 +13,7 @@ int main(int argc, char *argv[]){
 	
 	while(true){
 		testClient->writeToServer();
-		testClient->readFromServer();
+		
 	}
 
 	testClient->closeConnection();
