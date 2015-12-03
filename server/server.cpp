@@ -4,10 +4,6 @@
 #include "server.h"
 
 
-///////////////////////////////////////////////
-// functions for the Server class            //
-///////////////////////////////////////////////
-
 void chatServer::error(const char *msg)
 {
         perror(msg);
@@ -61,28 +57,50 @@ void chatServer::bindSocket(){
 void chatServer::listenForClients(){
 	listen(serverSockFileDesc, 5);
 	clientSocketLength = sizeof(client_address);
-	clientSockFileDesc = accept(serverSockFileDesc, (struct sockaddr *) &client_address, &clientSocketLength);
+	clientSockFileDesc = accept(serverSockFileDesc,
+				 (struct sockaddr *) &client_address, &clientSocketLength);
+
 	if(clientSockFileDesc < 0) error("ERROR accepting client");
 	else printf("Client connected..\n");
 }
 
 
-
-void *chatServer::readFromClient(){
+void chatServer::clearMessageBuffer(){
 	bzero(messageBuffer, sizeof(messageBuffer));
-	n = read(clientSockFileDesc, messageBuffer, MAX_MESSAGE_LENGTH);
-	if( n < 0) error("Error reading from socket");
-	printf("client: %s", messageBuffer);
 }
 
 
+void *chatServer::readFromClient(){
+	clearMessageBuffer();
+	loadBufferFromSocket();	
+	printMessageBuffer();
+}
+
+void chatServer::printMessageBuffer(){
+	printf("client: %s", messageBuffer);
+}
+
+void chatServer::loadBufferFromSocket(){
+	n = read(clientSockFileDesc, messageBuffer, MAX_MESSAGE_LENGTH);
+	if( n < 0) error("Error reading from socket");
+}
+
+void chatServer::loadUserInputIntoBuffer(){
+	fgets(messageBuffer, sizeof(messageBuffer), stdin);
+}
+
+void chatServer::writeBufferToSocket(){
+
+		n = write(clientSockFileDesc, messageBuffer, strlen(messageBuffer));
+		if(n < 0) error("ERROR writing to socket");
+	
+}
+
 
 void *chatServer::writeToClient(){
-	printf("server: ");
-	bzero(messageBuffer, sizeof(messageBuffer));
-	fgets(messageBuffer, sizeof(messageBuffer), stdin);
-	n = write(clientSockFileDesc, messageBuffer, strlen(messageBuffer));
-	if(n < 0) error("ERROR writing to socket");
+		
+	readFromClient();
+	writeBufferToSocket();
 }
 
 

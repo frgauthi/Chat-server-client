@@ -1,4 +1,4 @@
-// this is a refactor of the server application
+// this is the header file for the server application
 // Author: Frank Gauthier
 
 #ifndef chatServer_h
@@ -15,7 +15,7 @@
 
 
 #define MAX_MESSAGE_LENGTH 256
-#define MAX_THREADS 5
+#define MAX_THREADS 8
 
 
 class chatServer{
@@ -25,12 +25,12 @@ class chatServer{
 	char messageBuffer[MAX_MESSAGE_LENGTH];
 	socklen_t clientSocketLength;
 	struct sockaddr_in server_address, client_address;
-	int n;
-	
+	int n, currentThreads, numberOfClients;
+	pthread_t threadID[MAX_THREADS];
 	
 	public:
-	pthread_t threadId[MAX_THREADS];
 	
+
 	void error(const char *msg);
 	void openSocket();
 	int getServerSockFileDesc();
@@ -41,6 +41,11 @@ class chatServer{
 	void *readFromClient();		
 	void *writeToClient();
 	void closeConnection();
+	void clearMessageBuffer();
+	void loadBufferFromSocket();
+	void printMessageBuffer();
+	void loadUserInputIntoBuffer();
+	void writeBufferToSocket();
 	
 };
 

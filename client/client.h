@@ -35,7 +35,7 @@ class chatClient{
 	void closeConnection();
 	void setPortNumber(int port);
 	void setServer(struct hostent *);
-	
+	void printFileDescriptor();	
 };
 
 #endif

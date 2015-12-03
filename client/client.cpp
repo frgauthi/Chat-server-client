@@ -19,6 +19,10 @@ chatClient::chatClient(int port, struct hostent *serv){
 	connectToServer();
 }
 
+void chatClient::printFileDescriptor(){
+	printf("%d", clientSockFileDesc);
+}
+
 void chatClient::openSocket(){
 	clientSockFileDesc = socket(AF_INET, SOCK_STREAM, 0);
         if(clientSockFileDesc < 0) error("ERROR opening client socket");
