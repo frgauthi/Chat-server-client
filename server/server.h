@@ -12,11 +12,15 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <vector>
+#include <iostream>
+#include <string>
 
 
 #define MAX_MESSAGE_LENGTH 256
-#define MAX_THREADS 8
 
+
+using namespace std;
 
 class chatServer{
 	
@@ -26,7 +30,8 @@ class chatServer{
 	socklen_t clientSocketLength;
 	struct sockaddr_in server_address, client_address;
 	int n, currentThreads, numberOfClients;
-	pthread_t threadID[MAX_THREADS];
+	vector<pthread_t> threadList;
+	vector<int> clientDescriptorList;
 	
 	public:
 	
@@ -37,16 +42,17 @@ class chatServer{
 	explicit chatServer(int port);
 	void initServerAddress(int port);
 	void bindSocket();
-	void listenForClients();
-	void *readFromClient();		
+	int listenForClients();
+	void *readFromClient(int);		
 	void *writeToClient();
 	void closeConnection();
 	void clearMessageBuffer();
-	void loadBufferFromSocket();
+	void loadBufferFromSocket(int);
 	void printMessageBuffer();
 	void loadUserInputIntoBuffer();
-	void writeBufferToSocket();
-	
+	void writeBufferToSocket(int);
+	void printClientDescriptors();	
+	int getLatestClientDesc();
 };
 
 

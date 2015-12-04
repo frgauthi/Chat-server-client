@@ -13,12 +13,19 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <iostream>
+#include <pthread.h>
 
 #define MAX_MESSAGE_LENGTH 256
+#define MAX_NAME_SIZE 15
+
+using namespace std;
+
 
 class chatClient{
 
 	private:
+	string userName;
 	int clientSockFileDesc, portNumber, n;
 	struct sockaddr_in server_address;
 	struct hostent *server;
@@ -35,7 +42,14 @@ class chatClient{
 	void closeConnection();
 	void setPortNumber(int port);
 	void setServer(struct hostent *);
-	void printFileDescriptor();	
+	void printFileDescriptor();
+	void clearMessageBuffer();
+	void loadUserInputIntoBuffer();
+	void writeBufferToSocket();
+	void loadBufferFromSocket();
+	void printMessageBuffer();
+	void setUserName(string*);
+	void promptForUserName();	
 };
 
 #endif

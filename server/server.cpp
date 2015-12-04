@@ -12,6 +12,12 @@ void chatServer::error(const char *msg)
 
 
 
+int chatServer::getLatestClientDesc(){
+	return this->clientSockFileDesc;
+}
+
+
+
 void chatServer::openSocket(){
 	serverSockFileDesc = socket(AF_INET, SOCK_STREAM, 0);
 	if(serverSockFileDesc < 0) error("Error opening socket!");
@@ -54,14 +60,27 @@ void chatServer::bindSocket(){
 
 
 
-void chatServer::listenForClients(){
+int chatServer::listenForClients(){
 	listen(serverSockFileDesc, 5);
 	clientSocketLength = sizeof(client_address);
 	clientSockFileDesc = accept(serverSockFileDesc,
 				 (struct sockaddr *) &client_address, &clientSocketLength);
-
+	
 	if(clientSockFileDesc < 0) error("ERROR accepting client");
-	else printf("Client connected..\n");
+	else{ 
+		cout << "Client connected..." << endl;
+		clientDescriptorList.push_back(clientSockFileDesc);
+		numberOfClients++;
+		
+	}
+	return clientSockFileDesc;
+}
+
+
+void chatServer::printClientDescriptors(){
+	for(int i = 0; i<clientDescriptorList.size();i++){
+		cout << clientDescriptorList[i] << endl;
+	}
 }
 
 
@@ -70,38 +89,43 @@ void chatServer::clearMessageBuffer(){
 }
 
 
-void *chatServer::readFromClient(){
-	clearMessageBuffer();
-	loadBufferFromSocket();	
-	printMessageBuffer();
+void *chatServer::readFromClient(int clientDescriptor){
+		clearMessageBuffer();
+		loadBufferFromSocket(clientDescriptor);	
+		if(strlen(messageBuffer) > 1){	
+			printMessageBuffer();
+		}
 }
 
 void chatServer::printMessageBuffer(){
-	printf("client: %s", messageBuffer);
+	printf("%s", messageBuffer);
 }
 
-void chatServer::loadBufferFromSocket(){
-	n = read(clientSockFileDesc, messageBuffer, MAX_MESSAGE_LENGTH);
-	if( n < 0) error("Error reading from socket");
+void chatServer::loadBufferFromSocket(int descriptor){
+		n = read(descriptor, messageBuffer, MAX_MESSAGE_LENGTH);
+		if( n < 0) error("Error reading from socket");
 }
 
 void chatServer::loadUserInputIntoBuffer(){
 	fgets(messageBuffer, sizeof(messageBuffer), stdin);
 }
 
-void chatServer::writeBufferToSocket(){
-
-		n = write(clientSockFileDesc, messageBuffer, strlen(messageBuffer));
-		if(n < 0) error("ERROR writing to socket");
+void chatServer::writeBufferToSocket(int client){
+		for(int i = 0; i < clientDescriptorList.size(); i++){
+				if(client != clientDescriptorList[i]){
+					n = write(clientDescriptorList[i], messageBuffer, strlen(messageBuffer));
+					if(n < 0) error("ERROR writing to socket");
+				}
+		}
 	
 }
 
-
+/*
 void *chatServer::writeToClient(){
 		
 	readFromClient();
 	writeBufferToSocket();
-}
+}*/
 
 
 

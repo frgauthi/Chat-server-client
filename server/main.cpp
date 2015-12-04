@@ -9,21 +9,19 @@ void *sendMessage(chatServer *serv){
 
 void *recMessage(void *serv){
 	chatServer *tmpServer = (chatServer*) serv;
-	while(true) tmpServer->readFromClient();
+	int client = tmpServer->getLatestClientDesc();
+	while(true) {
+			tmpServer->readFromClient(client);
+			//tmpServer->printClientDescriptors();
+			tmpServer->writeBufferToSocket(client);
+	}
 }
 
 
 
 int main(int argc, char *argv[]){
 	
-//	struct timeval tv;
-//	fd_set readfds;
 
-//	tv.tv_sec = 2;
-//	tv.tv_usec = 500000;
-
-//	FD_ZERO(&readfds);
-//	FD_SET(0, &readfds);
 	pthread_t threadID[4];
 	int clientCount = 0;
 
@@ -37,20 +35,11 @@ int main(int argc, char *argv[]){
 	
 	while(clientCount < 4)
 	{	
-//		select(1, &readfds, NULL, NULL, &tv);		
-//		if(FD_ISSET(0, &readfds))printf("A key was pressed!");
-//		else printf("Timed out.");
 	
 		testServer->listenForClients();
 		pthread_create(&threadID[clientCount++],NULL,recMessage, (void *) testServer);
-		
-		
-		//testServer->readFromClient();
-		//testServer->writeToClient();
 	
 	}
-			
-	
 
 	testServer->closeConnection();
 }
