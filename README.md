@@ -12,3 +12,15 @@ This code is intended to be an API in C++  that allows a simple client/server co
     client and server regularly. If you find this code useful or end up using it for anything exciting, 
     please let me know! :) If you use the code, a link to https://github.com/frgauthi or reference to my
     name would be greatly appreciated! 
+
+# Latest Update
+
+	- Currently userNames are added to the buffer by the user, the server does not yet track usernames
+	
+	- Issue with the first message not being received by the server.
+	
+	- After user 1 sends a message user 2's first message is not received by the server but all messages
+	after are received.
+	
+	- Issues connecting to the server over the internet, but using localhost or 127.0.0.1 works.
+	The local network's IP also works to connect to the server.
