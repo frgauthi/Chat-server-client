@@ -13,6 +13,13 @@ This code is intended to be an API in C++  that allows a simple client/server co
     please let me know! :) If you use the code, a link to https://github.com/frgauthi or reference to my
     name would be greatly appreciated! 
 
+
+		Task			Command				Example
+		-----------------	----------------------------	----------------------
+	USAGE	starting server		./server <port>			./server 9993
+		connecting client	./client <IP Address> <port>	./client 127.0.0.1 9993
+
+
 # Latest Update
 
 	- Currently userNames are added to the buffer by the user, the server does not yet track usernames
