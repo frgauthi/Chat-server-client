@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
 	// initialize the test client with the given host and port
 	testClient = new chatClient(atoi(argv[2]), gethostbyname(argv[1]));
 	
-//	testClient->promptForUserName();
+	testClient->promptForUserName();
 	
 	
 	pthread_create(&threadID[1], NULL, recMessage, (void*) testClient );

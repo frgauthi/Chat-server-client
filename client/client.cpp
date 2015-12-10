@@ -46,7 +46,10 @@ void chatClient::clearMessageBuffer(){
 }
 
 void chatClient::loadUserInputIntoBuffer(){
-        fgets(messageBuffer, sizeof(messageBuffer)-1, stdin);
+	for(int i = 0; i<userName.size();i++) messageBuffer[i] = userName[i];
+	messageBuffer[userName.size()] = ':';
+	messageBuffer[userName.size() + 1] = ' ';
+        fgets(messageBuffer+userName.size()+2, sizeof(messageBuffer)-userName.size()-3, stdin);
 }
 
 void chatClient::writeBufferToSocket(){
