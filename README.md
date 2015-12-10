@@ -16,7 +16,7 @@ This code is intended to be an API in C++  that allows a simple client/server co
 
 		Task			Command				Example
 		-----------------	----------------------------	----------------------
-	USAGE	starting server		./server <port>			./server 9993
+		starting server		./server <port>			./server 9993
 		connecting client	./client <IP Address> <port>	./client 127.0.0.1 9993
 
 
