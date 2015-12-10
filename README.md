@@ -23,4 +23,4 @@ This code is intended to be an API in C++  that allows a simple client/server co
 	after are received.
 	
 	- Issues connecting to the server over the internet, but using localhost or 127.0.0.1 works.
-	The local network's IP also works to connect to the server.
+	The local network's IP also works to connect to the server. Ex (192.168.xxx.xxx)
